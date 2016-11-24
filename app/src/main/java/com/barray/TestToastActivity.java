@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.common.commonutils.DialogPermissionUtil;
 import com.common.commonutils.ImageLoaderUtils;
 import com.common.commonutils.LogUtils;
 import com.common.commonutils.NetWorkUtils;
@@ -31,5 +32,6 @@ public class TestToastActivity extends AppCompatActivity {
 //        ToastUitl.show(getApplicationContext()," ", Toast.LENGTH_SHORT);
 //       ToastUitl.showToastWithImg(null,R.mipmap.ic_launcher);
 //        ToastUitl.showShort("IP:"+IpUtils.GetHostIp());
+        DialogPermissionUtil.PermissionDialog(this,"wifi");
     }
 }
