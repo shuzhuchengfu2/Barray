@@ -3,8 +3,8 @@ package com.barray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
+import com.common.commonutils.IpUtils;
 import com.common.commonutils.LogUtils;
 import com.common.commonutils.NetWorkUtils;
 import com.common.commonutils.ToastUitl;
@@ -24,7 +24,8 @@ public class TestToastActivity extends AppCompatActivity {
     }
 
     public void dianji(View view){
-        ToastUitl.show(getApplicationContext()," ", Toast.LENGTH_SHORT);
-//        ToastUitl.showToastWithImg(null,R.mipmap.ic_launcher);
+//        ToastUitl.show(getApplicationContext()," ", Toast.LENGTH_SHORT);
+//       ToastUitl.showToastWithImg(null,R.mipmap.ic_launcher);
+        ToastUitl.showShort("IP:"+IpUtils.GetHostIp());
     }
 }
