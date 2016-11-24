@@ -1,13 +1,20 @@
 package com.common;
 
+import com.common.commonutils.JsonUtils;
 import com.common.commonutils.MoneyUtil;
 import com.common.security.AESUtil;
 import com.common.security.Base64;
 import com.common.security.DESBase64Util;
 import com.common.security.Md5Security;
+import com.google.gson.reflect.TypeToken;
 
 import org.junit.Test;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.common.commonutils.JsonUtils.fromJson;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -59,6 +66,46 @@ public class ExampleUnitTest {
 //        System.out.println(MoneyUtil.formatMoney("1,000.12645"));
         System.out.println(MoneyUtil.formatMoneyWithoutDecimal("1000.12645"));
     }
+    @Test
+    public void testJson() throws Exception{
+        Demo demo = new Demo();
+        demo.setAge(1);
+        demo.setName("张三");
+        String json = JsonUtils.toJson(demo);
+        System.out.println(json);
+        System.out.println("=========");
+        String name = JsonUtils.getStringValue(json,"name");
+        int age = JsonUtils.getIntValue(json,"age");
+        String strAge = JsonUtils.getStringValue(json,"age");
+        System.out.println(name);
+        System.out.println(age);
+        System.out.println(strAge);
+        System.out.println("=========");
+        System.out.println(JsonUtils.toJson(null));
+        System.out.println("=========");
+        Demo demo1 = (Demo) fromJson(json,Demo.class);
+        System.out.println(demo1);
+        System.out.println("=========");
+        List<Demo> demoList = new ArrayList<>();
+        for(int a =0;a<5;a++){
+            Demo demo2 = new Demo();
+            demo2.setName("name"+a);
+            demo2.setAge(a);
+            demoList.add(demo2);
+        }
+        String jsonStr = JsonUtils.toJson(demoList);
+        System.out.println(jsonStr);
+        System.out.println("=========");
+        Type  type =  new TypeToken<List<Demo>> (){}.getType();
+        List<Demo> demos = (List<Demo>) JsonUtils.fromJson(jsonStr,type);
+        System.out.println(demos);
+        System.out.println("=========");
+
+
+
+
+    }
+
 
 
 
