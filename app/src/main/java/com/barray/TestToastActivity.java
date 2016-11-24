@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.common.commonutils.LogUtils;
+import com.common.commonutils.NetWorkUtils;
 import com.common.commonutils.ToastUitl;
 
 public class TestToastActivity extends AppCompatActivity {
@@ -13,7 +15,12 @@ public class TestToastActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_toast);
-
+        LogUtils.logInit(true);
+        LogUtils.logd("aaaa");
+        LogUtils.logd("link:"+NetWorkUtils.isLinkAvailable("http://www.baidu.com"));
+        LogUtils.logd("3g:"+NetWorkUtils.is3gConnected(this));
+        LogUtils.logd("connect:"+NetWorkUtils.isNetConnected(this));
+        LogUtils.logd("wifi:"+NetWorkUtils.isWifiConnected(this));
     }
 
     public void dianji(View view){

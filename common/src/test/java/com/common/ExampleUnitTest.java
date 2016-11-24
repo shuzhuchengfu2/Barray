@@ -1,5 +1,6 @@
 package com.common;
 
+import com.common.commonutils.MoneyUtil;
 import com.common.security.AESUtil;
 import com.common.security.Base64;
 import com.common.security.DESBase64Util;
@@ -53,6 +54,13 @@ public class ExampleUnitTest {
         aes = AESUtil.Decrypt(aes);
         System.out.print(aes);
     }
+    @Test
+    public void testMoney() throws Exception{
+//        System.out.println(MoneyUtil.formatMoney("1,000.12645"));
+        System.out.println(MoneyUtil.formatMoneyWithoutDecimal("1000.12645"));
+    }
+
+
 
 
 
