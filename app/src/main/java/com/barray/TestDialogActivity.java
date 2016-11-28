@@ -1,21 +1,40 @@
 package com.barray;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
-public class TestDialogActivity extends AppCompatActivity {
+import com.common.base.BaseActivity;
+import com.common.commonutils.ToastUitl;
+
+import butterknife.Bind;
+
+public class TestDialogActivity extends BaseActivity {
+    @Bind(R.id.dianjiaa)
+    Button dianjiaa;
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_test_dialog;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_dialog);
+    public void initPresenter() {
 
     }
 
-    public void testDialog(View view){
-//        LoadingDialog.showDialogForLoading(TestDialogActivity.this);
-//        LoadingDialog.showDialogForLoading(this,"我在加载啦。。。",false);
-
+    @Override
+    public void initView() {
+        dianjiaa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUitl.showShort("你好啊！");
+            }
+        });
     }
+
+//    public void testDialog(View view){
+////        LoadingDialog.showDialogForLoading(TestDialogActivity.this);
+////        LoadingDialog.showDialogForLoading(this,"我在加载啦。。。",false);
+////        AppManager.getAppManager().preActivity();
+//    }
+
 }
