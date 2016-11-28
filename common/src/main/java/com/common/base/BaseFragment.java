@@ -1,100 +1,59 @@
 package com.common.base;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.common.R;
-import com.common.baseapp.AppManager;
 import com.common.baserx.RxManager;
 import com.common.commonutils.TUtil;
 import com.common.commonutils.ToastUitl;
 import com.common.commonwidget.LoadingDialog;
-import com.common.commonwidget.StatusBarCompat;
 
 import butterknife.ButterKnife;
 
 /**
  * 作者：xiongdejin
- * 时间：2016/11/28 17:21
- * 描述：Activity的基类
+ * 时间：2016/11/28 17:58
+ * 描述：Fragment的基类
  */
 
-public abstract class BaseActivity <T extends BasePresenter,E extends BaseModel> extends AppCompatActivity {
+public abstract class BaseFragment<T extends BasePresenter,E extends BaseModel> extends Fragment {
+    protected View rootView;
     public T mPresenter;
     public E mModel;
-    public Context mContext;
     public RxManager mRxManager;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mRxManager = new RxManager();
-        doBeforeSetcontentView();
-        setContentView(getLayoutId());
-        ButterKnife.bind(this);
-        mContext = this;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (rootView == null)
+            rootView = inflater.inflate(getLayoutId(), container, false);
+        mRxManager=new RxManager();
+        ButterKnife.bind(this, rootView);
         mPresenter = TUtil.getT(this, 0);
-        mModel=TUtil.getT(this,1);
+        mModel= TUtil.getT(this,1);
         if(mPresenter!=null){
-            mPresenter.mContext=this;
+            mPresenter.mContext=this.getActivity();
         }
-        this.initPresenter();
-        this.initView();
+        initPresenter();
+        initView();
+        return rootView;
     }
 
 
+
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
         if (mPresenter != null)
             mPresenter.onDestroy();
         mRxManager.clear();
-        ButterKnife.unbind(this);
-        AppManager.getAppManager().finishActivity(this);
-    }
-
-
-    /**
-     * 设置layout前配置
-     */
-    private void doBeforeSetcontentView() {
-        // 把actvity放到application栈中管理
-        AppManager.getAppManager().addActivity(this);
-        // 无标题
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // 设置竖屏
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        // 默认着色状态栏
-        SetStatusBarColor();
-    }
-
-
-    /*********************状态栏******************************/
-    /**
-     * 着色状态栏（4.4以上系统有效）
-     */
-    protected void SetStatusBarColor() {
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.main_color));
-    }
-
-    /**
-     * 着色状态栏（4.4以上系统有效）
-     */
-    protected void SetStatusBarColor(int color) {
-        StatusBarCompat.setStatusBarColor(this, color);
-    }
-
-    /**
-     * 沉浸状态栏（4.4以上系统有效）
-     */
-    protected void SetTranslanteBar() {
-        StatusBarCompat.translucentStatusBar(this);
     }
 
     /*********************子类实现*****************************/
@@ -125,7 +84,7 @@ public abstract class BaseActivity <T extends BasePresenter,E extends BaseModel>
     public void startActivityForResult(Class<?> cls, Bundle bundle,
                                        int requestCode) {
         Intent intent = new Intent();
-        intent.setClass(this, cls);
+        intent.setClass(getActivity(), cls);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
@@ -137,7 +96,7 @@ public abstract class BaseActivity <T extends BasePresenter,E extends BaseModel>
      **/
     public void startActivity(Class<?> cls, Bundle bundle) {
         Intent intent = new Intent();
-        intent.setClass(this, cls);
+        intent.setClass(getActivity(), cls);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
@@ -196,7 +155,7 @@ public abstract class BaseActivity <T extends BasePresenter,E extends BaseModel>
      * 开启浮动加载进度条
      */
     public void startProgressDialog() {
-        LoadingDialog.showDialogForLoading(this);
+        LoadingDialog.showDialogForLoading(getActivity());
     }
 
     /**
@@ -205,7 +164,7 @@ public abstract class BaseActivity <T extends BasePresenter,E extends BaseModel>
      * @param msg
      */
     public void startProgressDialog(String msg) {
-        LoadingDialog.showDialogForLoading(this, msg, true);
+        LoadingDialog.showDialogForLoading(getActivity(), msg, true);
     }
 
     /**
@@ -214,5 +173,6 @@ public abstract class BaseActivity <T extends BasePresenter,E extends BaseModel>
     public void stopProgressDialog() {
         LoadingDialog.cancelDialogForLoading();
     }
+
 
 }
