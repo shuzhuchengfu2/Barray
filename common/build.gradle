@@ -33,4 +33,10 @@ dependencies {
     //gson解析
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    //rx
+    compile 'io.reactivex:rxjava:1.0.1'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    //view 注解
+    compile 'com.jakewharton:butterknife:7.0.1'
+
 }

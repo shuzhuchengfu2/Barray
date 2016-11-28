@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="toast_stroke_gray">#99d4d4d4</color>
+    <color name="gray">#FFF0F0F0</color>
+    <color name="main_color">#FA7C20</color>
 
 
     <color name="alpha_05_white">#0DFFFFFF</color>
