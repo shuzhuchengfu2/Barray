@@ -16,7 +16,6 @@ public class TestToastActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_toast);
-        LogUtils.logInit(true);
         LogUtils.logd("aaaa");
         LogUtils.logd("link:"+NetWorkUtils.isLinkAvailable("http://www.baidu.com"));
         LogUtils.logd("3g:"+NetWorkUtils.is3gConnected(this));

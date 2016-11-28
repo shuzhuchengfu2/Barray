@@ -1,6 +1,7 @@
 package com.barray;
 
 import com.common.baseapp.BaseApplication;
+import com.common.commonutils.LogUtils;
 
 /**
  * 作者：xiongdejin
@@ -9,4 +10,9 @@ import com.common.baseapp.BaseApplication;
  */
 
 public class MyApplication extends BaseApplication {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        LogUtils.logInit(true);
+    }
 }
